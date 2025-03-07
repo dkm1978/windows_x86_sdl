@@ -1,0 +1,28 @@
+{
+  "name": "x86_SDL",
+  "title": "Windows x86 SDL",
+  "description": "Windows x86 SDL platform.",
+  "homepage": "https://registry.platformio.org/platforms/platformio/windows_x86",
+  "license": "Apache-2.0",
+  "keywords": [
+    "dev-platform",
+    "Windows",
+    "x86",
+    "SDL"
+  ],
+  "engines": {
+    "platformio": "^6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dkm1978/platformio_x86_SDL.git"
+  },
+  "version": "1.2.0",
+  "packages": {
+    "toolchain-gccmingw32": {
+      "type": "toolchain",
+      "owner": "platformio",
+      "version": "^1"
+    }
+  }
+}
