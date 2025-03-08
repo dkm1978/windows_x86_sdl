@@ -1,4 +1,4 @@
-My custom platform for PlatformIO based on https://registry.platformio.org/platforms/platformio/windows_x86 <br/>
+My custom platform for PlatformIO based on https://registry.platformio.org/platforms/platformio/windows_x86 <br>
 I added "Resource Hacker" to the toolchain to allow changing the icon of the compiled program.
 
 additionally the toolchain contains UPX : the Ultimate Packer for eXecutables - https://upx.github.io/
