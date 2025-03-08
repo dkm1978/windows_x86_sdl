@@ -15,12 +15,10 @@
 """
     Builder for Windows x86 / 32bit
 """
-import os
-#Import("env", "projenv")
+import os,subprocess
+
 from pathlib import Path
-
 from SCons.Script import AlwaysBuild, Default, DefaultEnvironment
-
 from platformio.util import get_systype
 
 env = DefaultEnvironment()
@@ -72,6 +70,9 @@ env.Append(
     ]
 )
 
+if env.GetOption('clean'):
+    print("==== WE WANT TO DO A CLEAN ====")    
+
 if get_systype() == "darwin_x86_64":
     env.Replace(
         _BINPREFIX="i586-mingw32-"
@@ -107,7 +108,9 @@ def post_program_action(source, target, env):
     cmd=" ".join([objdump,src_elf])  
     env.Execute(cmd)
     print("\n"+bcolors.OKGREEN+"Adding icon resource...",end="")
-    env.Execute("@rh.exe -open \"${PROJECT_DIR}\\binary\\"+new_name+".exe\" -save \"${PROJECT_DIR}\\binary\\"+new_name+".exe\" -resource \"dafault.ico\" -mask ICONGROUP,MAINICON, -action addoverwrite -log NUL")
+    polecenie=env.subst("@rh.exe -open \"${PROJECT_DIR}\\binary\\"+new_name+".exe\" -save \"${PROJECT_DIR}\\binary\\"+new_name+".exe\" -resource \"dafault.ico\" -mask ICONGROUP,MAINICON, -action addoverwrite -log NUL")
+    process = subprocess.Popen(polecenie, shell=True, stdout=subprocess.PIPE)
+    process.wait()
     print("DONE.")
     try:
         paker = env.GetProjectOption("custom_upx_file")
@@ -115,16 +118,19 @@ def post_program_action(source, target, env):
         paker=""
     if paker=="true" or paker=="True":
       print(bcolors.OKCYAN+"Crunching..."),
-      env.Execute("@upx.exe -f -q \"${PROJECT_DIR}\\binary\\"+new_name+".exe\" > NIL")
+      polecenie=env.subst("@upx.exe -f -q \"${PROJECT_DIR}\\binary\\"+new_name+".exe\"")
+      process = subprocess.Popen(polecenie, shell=True, stdout=subprocess.PIPE)
+      process.wait()
       print(bcolors.OKCYAN+bcolors.UP+"Crunching...DONE.")
-    os.chdir("binary")
-    print(bcolors.HEADER+"Starting application:\n")
-    env.Execute("@"+new_name+".exe")
-    print("\n"+bcolors.OKBLUE+"Application ended.\n\n")
-
-
+      os.chdir("binary")
+      print(bcolors.HEADER+"Starting application:\n")
+      polecenie=env.subst("@"+new_name+".exe")
+      process = subprocess.Popen(polecenie, shell=True, stdout=subprocess.PIPE)
+      process.wait()
+      print("\n"+bcolors.OKBLUE+"Application ended.\n\n")
 
 env.AddPostAction("$BUILD_DIR/program.exe", post_program_action)
+
 #
 # Target: Build executable program
 #
@@ -137,7 +143,7 @@ target_bin = env.BuildProgram()
 
 target_size = env.Alias("size", target_bin, env.VerboseAction(
     "$SIZEPRINTCMD", "Calculating size $SOURCE"))
-#AlwaysBuild(target_size)
+AlwaysBuild(target_size)
 
 
 #
