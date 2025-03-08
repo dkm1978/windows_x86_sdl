@@ -1,6 +1,6 @@
 {
   "name": "winx86sdl",
-  "title": "Windows x86 SDL",
+  "title": "Windows x86 with SDL support.",
   "description": "Windows x86 + SDL platform.",
   "homepage": "https://github.com/dkm1978/windows_x86_sdl",
   "license": "none",
