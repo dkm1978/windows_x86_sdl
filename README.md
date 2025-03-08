@@ -8,4 +8,5 @@ custom_upx_file = false ; true | false<br>
 
 with this option the compiled program will be compressed using UPX.<br>
 
-The examplex directory contains the example program.
+The examplex directory contains the example program.<br>
+To change the icon of the compiled program you need to add the dafault.ico file to the main project directory.
