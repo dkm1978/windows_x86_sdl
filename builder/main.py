@@ -15,6 +15,9 @@
 """
     Builder for Windows x86 / 32bit
 """
+import os
+#Import("env", "projenv")
+from pathlib import Path
 
 from SCons.Script import AlwaysBuild, Default, DefaultEnvironment
 
@@ -78,6 +81,50 @@ elif get_systype() in ("linux_x86_64", "linux_i686"):
         _BINPREFIX="i686-w64-mingw32-"
     )
 
+
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKCYAN = '\033[96m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+    UP = '\033[1A'
+
+def post_program_action(source, target, env): 
+    
+    if os.path.exists("binary")==False:os.mkdir("binary", 0o666)
+    objdump="@copy "
+    src_elf=env.subst("\"${BUILD_DIR}\\${PROGNAME}.exe\"")
+    new_name=os.path.basename(os.path.normpath(env.subst('${PROJECT_DIR}'))).strip()
+    cmd=objdump+src_elf+" \"${PROJECT_DIR}\\binary\\"+new_name+".exe\" > nul"  
+    env.Execute(cmd)
+    objdump="@del "
+    src_elf=env.subst("\"${BUILD_DIR}\\${PROGNAME}.exe\"")
+    cmd=" ".join([objdump,src_elf])  
+    env.Execute(cmd)
+    print("\n"+bcolors.OKGREEN+"Adding icon resource...",end="")
+    env.Execute("@rh.exe -open \"${PROJECT_DIR}\\binary\\"+new_name+".exe\" -save \"${PROJECT_DIR}\\binary\\"+new_name+".exe\" -resource \"dafault.ico\" -mask ICONGROUP,MAINICON, -action addoverwrite -log NUL")
+    print("DONE.")
+    try:
+        paker = env.GetProjectOption("custom_upx_file")
+    except: 
+        paker=""
+    if paker=="true" or paker=="True":
+      print(bcolors.OKCYAN+"Crunching..."),
+      env.Execute("@upx.exe -f -q \"${PROJECT_DIR}\\binary\\"+new_name+".exe\" > NIL")
+      print(bcolors.OKCYAN+bcolors.UP+"Crunching...DONE.")
+    os.chdir("binary")
+    print(bcolors.HEADER+"Starting application:\n")
+    env.Execute("@"+new_name+".exe")
+    print("\n"+bcolors.OKBLUE+"Application ended.\n\n")
+
+
+
+env.AddPostAction("$BUILD_DIR/program.exe", post_program_action)
 #
 # Target: Build executable program
 #
@@ -90,11 +137,15 @@ target_bin = env.BuildProgram()
 
 target_size = env.Alias("size", target_bin, env.VerboseAction(
     "$SIZEPRINTCMD", "Calculating size $SOURCE"))
-AlwaysBuild(target_size)
+#AlwaysBuild(target_size)
+
 
 #
 # Default targets
 #
 
 Default([target_bin])
+
+
+
 
