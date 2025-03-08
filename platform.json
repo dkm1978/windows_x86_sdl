@@ -22,7 +22,7 @@
     "toolchain-gccmingw32sdl": {
       "type": "toolchain",
       "owner": "dkm1978",
-      "version": "https://github.com/dkm1978/toolchain-gccmingw32sdl/releases/download/1.0.0/toolchain-gccmingw32sdl.zip"
+      "version": "https://github.com/dkm1978/toolchain-gccmingw32sdl/releases/download/1/toolchain-gccmingw32sdl.zip"
     }
   }
 }
