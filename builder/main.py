@@ -13,7 +13,7 @@
 # limitations under the License.
 
 """
-    Builder for Windows x86 / 32bit
+    Builder for Windows x86 / 32bit + SDL2
 """
 import os,subprocess
 
