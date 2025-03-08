@@ -114,11 +114,11 @@ def post_program_action(source, target, env):
     except: 
         paker=""
     if paker=="true" or paker=="True":
-      print(bcolors.OKCYAN+"Crunching..."),
-      polecenie=env.subst("@upx.exe -f -q \"${PROJECT_DIR}\\binary\\"+new_name+".exe\"")
-      process = subprocess.Popen(polecenie, shell=True, stdout=subprocess.PIPE)
-      process.wait()
-      print(bcolors.OKCYAN+bcolors.UP+"Crunching...DONE.")
+       print(bcolors.OKCYAN+"Crunching..."),
+       polecenie=env.subst("@upx.exe -f -q \"${PROJECT_DIR}\\binary\\"+new_name+".exe\"")
+       process = subprocess.Popen(polecenie, shell=True, stdout=subprocess.PIPE)
+       process.wait()
+       print(bcolors.OKCYAN+bcolors.UP+"Crunching...DONE.")
       os.chdir("binary")
       print(bcolors.HEADER+"Starting application:\n")
       polecenie=env.subst("@"+new_name+".exe")
