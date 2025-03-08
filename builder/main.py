@@ -38,6 +38,12 @@ env.Replace(
 )
 
 env.Append(
+    CXXFLAGS=[
+        "-std=c++14"
+        ],
+    CCFLAGS=[
+        "-std=c++14"
+        ],
     LINKFLAGS=[
         "-static",
         "-static-libgcc",
@@ -46,11 +52,20 @@ env.Append(
         "-lmingw32",
         "-lSDL2main",
         "-lSDL2",
-        "-mconsole",
-        "-Wl,--no-undefined -Wl,--dynamicbase -Wl,--nxcompat" 
         "-lm",
-        "-ldinput8 -ldxguid -ldxerr8 -luser32 -lgdi32 -lwinmm -limm32 -lole32 -loleaut32",
-        "-lshell32 -lsetupapi -lversion -luuid -static-libgcc -std=c++14"
+        "-ldinput8",
+        "-ldxguid",
+        "-ldxerr8",
+        "-luser32",
+        "-lgdi32",
+        "-lwinmm",
+        "-limm32",
+        "-lole32",
+        "-loleaut32",
+        "-lshell32",
+        "-lsetupapi",
+        "-lversion",
+        "-luuid"
     ]
 )
 
@@ -82,3 +97,4 @@ AlwaysBuild(target_size)
 #
 
 Default([target_bin])
+
