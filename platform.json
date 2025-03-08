@@ -1,5 +1,5 @@
 {
-  "name": "windows-x86-sdl",
+  "name": "winx86sdl",
   "title": "Windows x86 SDL",
   "description": "Windows x86 + SDL platform.",
   "homepage": "https://github.com/dkm1978/windows_x86_sdl",
@@ -19,7 +19,7 @@
   },
   "version": "1.2.0",
   "packages": {
-    "toolchain-gccmingw32": {
+    "toolchain-x86-sdl": {
       "type": "toolchain",
       "owner": "dkm1978",
       "version": "^1"
