@@ -70,9 +70,6 @@ env.Append(
     ]
 )
 
-if env.GetOption('clean'):
-    print("==== WE WANT TO DO A CLEAN ====")    
-
 if get_systype() == "darwin_x86_64":
     env.Replace(
         _BINPREFIX="i586-mingw32-"
