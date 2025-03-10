@@ -42,9 +42,6 @@ env.Append(
     CXXFLAGS=[
         "-std=c++14"
         ],
-    CCFLAGS=[
-        "-std=c++14"
-        ],
     LINKFLAGS=[
         "-static",
         "-static-libgcc",
